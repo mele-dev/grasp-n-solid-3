@@ -5,6 +5,7 @@
 //---------------------------------------------------------------------------------
 using System;
 using System.IO;
+using Library;
 
 namespace Full_GRASP_And_SOLID.Library
 {
@@ -16,16 +17,15 @@ namespace Full_GRASP_And_SOLID.Library
 
     public class AllInOnePrinter
     {
-        public void PrintRecipe(Recipe recipe, Destination destination)
+        public IPrintDestination PrintDestination;
+
+        public AllInOnePrinter(IPrintDestination printDestination)
         {
-            if (destination == Destination.Console)
-            {
-                Console.WriteLine(recipe.GetTextToPrint());
-            }
-            else
-            {
-                File.WriteAllText("Recipe.txt", recipe.GetTextToPrint());
-            }
+            this.PrintDestination = printDestination;
+        }
+        public void PrintRecipe(Recipe recipe)
+        {
+            this.PrintDestination.Print(recipe);
         }
     }
 }
